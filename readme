@@ -1,0 +1,13 @@
+Node v17.4.0
+NPM v8.5.0
+
+API description
+
+/cache
+GET - get list of all key
+DELETE - clear all cache
+POST - post new item. Body must be JSON { key: string, value: string }
+
+/cache/key/:key
+GET - get single item
+DELETE - delete single item
