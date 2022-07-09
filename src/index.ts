@@ -1,7 +1,11 @@
 import express, { response } from 'express';
 import mongoose from 'mongoose';
+import Cleaner from './lib/Cleaner';
 import CacheRouter from './routes/cache';
-import { DatabaseURL, ServerPort } from './config';
+import config from './config';
+
+const { DatabaseURL, ServerPort } = config;
+new Cleaner();
 
 mongoose.connect(DatabaseURL, (error) => {
     if (error) {

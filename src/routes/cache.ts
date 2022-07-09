@@ -1,4 +1,5 @@
-import express from 'express';
+import express, { response } from 'express';
+import { request } from 'http';
 import Cache from '../models/cacheModel';
 
 const router = express.Router();
@@ -15,7 +16,8 @@ router.get('', (request, response) => {
 
     // response.send('Get all');
 });
-router.get('/:key', (request, response) => {
+
+router.get('/key/:key', (request, response) => {
     const { key } = request.params;
     Cache.findOne({ key }).then((item) => {
         if (item) {
@@ -39,7 +41,8 @@ router.delete('', (request, response) => {
         }
     });
 });
-router.delete('/:key', (request, response) => {
+
+router.delete('/key/:key', (request, response) => {
     const { key } = request.params;
     Cache.deleteOne({ key }, (error) => {
         if (error) {
