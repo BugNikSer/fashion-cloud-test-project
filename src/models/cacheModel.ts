@@ -1,9 +1,10 @@
 import { model, Schema } from "mongoose";
 import type { Model, Document } from "mongoose";
 
-interface ICache extends Document {
+export interface ICache extends Document {
     key: string;
     value: string;
+    created: number;
 }
 
 const cacheSchema = new Schema<ICache>({
@@ -15,6 +16,10 @@ const cacheSchema = new Schema<ICache>({
         type: String,
         required: true
     },
+    created: {
+        type: Number,
+        required: true
+    }
 });
 
 const Cache: Model<ICache> = model("Cache", cacheSchema);

@@ -1,8 +1,9 @@
-import express from 'express';
+import express, { response } from 'express';
 import mongoose from 'mongoose';
 import CacheRouter from './routes/cache';
+import { DatabaseURL, ServerPort } from './config';
 
-mongoose.connect('mongodb://127.0.0.1:27017/FashionCloud', (error) => {
+mongoose.connect(DatabaseURL, (error) => {
     if (error) {
         console.log(error.message)
     } else {
@@ -16,6 +17,8 @@ app.get('/', (request, response) => {
     response.send('Hello there!');
 });
 app.use('/cache', CacheRouter);
+app.use('*', () => {
+    response.status(404).send('No such route exists')
+})
 
-const port = 3000;
-app.listen(port, () => console.log(`Running on port ${port}`));
+app.listen(ServerPort, () => console.log(`Running on port ${ServerPort}`));
