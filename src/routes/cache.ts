@@ -13,8 +13,6 @@ router.get('', (request, response) => {
         .catch((e) => {
             response.status(404).send(e.toString());
         });
-
-    // response.send('Get all');
 });
 
 router.get('/key/:key', (request, response) => {

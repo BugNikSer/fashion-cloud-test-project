@@ -1,11 +1,11 @@
 import express, { response } from 'express';
 import mongoose from 'mongoose';
-import Cleaner from './lib/Cleaner';
+import Updater from './lib/Updater';
 import CacheRouter from './routes/cache';
 import config from './config';
 
 const { DatabaseURL, ServerPort } = config;
-new Cleaner();
+new Updater();
 
 mongoose.connect(DatabaseURL, (error) => {
     if (error) {
