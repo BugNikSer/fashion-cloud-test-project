@@ -1,7 +1,8 @@
 import express, { response } from 'express';
-import { request } from 'http';
 import Cache from '../models/cacheModel';
+import config from '../config';
 
+const { CacheItemsLimit } = config;
 const router = express.Router();
 
 // GET
@@ -77,6 +78,26 @@ router.post('/', (request, response) => {
                     response.send('Cache hit');
                 } else {
                     console.log('Cache miss');
+
+                    Cache.find({}).then((items) => {
+                        if (items.length > CacheItemsLimit) {
+                            console.log('Cache limit overflow');
+
+                            const oldest = items.sort((a, b) =>
+                                a > b ? 1 : a == b ? 0 : -1
+                            )[0];
+
+                            console.log(oldest)
+                            Cache.deleteOne({ key: oldest.key }, (error) => {
+                                if (error) {
+                                    console.log('can not delete item', oldest.key);
+                                } else {
+                                    console.log('Item', oldest.key, 'deleted');
+                                }
+                            });
+                        }
+                    });
+
                     response.send('Cache miss');
                 }
             }
